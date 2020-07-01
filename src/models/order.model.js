@@ -1,19 +1,15 @@
-const { model, Schema } = require('mongoose');
+const Joi = require('joi');
 
-const OrderSchema = new Schema({
-    carrier_id: { type: Schema.Types.ObjectId, ref: 'Carrier' },
-    provider: String,
-    address: String,
-    phone: String,
-    description_order: String,
-    quantity: Number,
-    unit_price: Number, // product price excluding tax
-    total_price: Number, //price with tax
-    delivery_date: Date,
-    created_at: {
-        type: Date,
-        default: Date.now
-    }
+const OrderSchema = Joi.object().keys({
+    carrier_id: Joi.string(),
+    provider: Joi.string().required(),
+    address: Joi.string().required(),
+    phone: Joi.string().required(),
+    description_order: Joi.string(),
+    quantity: Joi.number(),
+    unit_price: Joi.number(), // product price excluding tax
+    total_price: Joi.number(), //price with tax
+    delivery_date: Joi.date(),
 })
 
-module.exports = model('Order', OrderSchema);
+module.exports = OrderSchema;

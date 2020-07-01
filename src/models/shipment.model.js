@@ -1,25 +1,18 @@
-const { model, Schema } = require('mongoose');
+const Joi = require('joi');
 
-const ShipmentSchema = new Schema({
-    carrier_id: { type: Schema.Types.ObjectId, ref: 'Carrier' },
-    date: {
-        type: Date,
-        default: Date.now
-    },
-    origin_country: String,
-    origin_state: String,
-    origin_city: String,
-    destination_country: String,
-    destination_state: String,
-    destination_city: String,
-    pickup_date: Date,
-    delivery_date: Date,
-    status: String,
-    carrier_rate: Number,
-    created_at: {
-        type: Date,
-        default: Date.now
-    }
+const ShipmentSchema = Joi.object().keys({
+    carrier_id: Joi.string(),
+    date: Joi.date().default(Date.now, 'time of creation'),
+    origin_country: Joi.string().required(),
+    origin_state: Joi.string().required(),
+    origin_city: Joi.string().required(),
+    destination_country: Joi.string().required(),
+    destination_state: Joi.string().required(),
+    destination_city: Joi.string().required(),
+    pickup_date: Joi.date(),
+    delivery_date: Joi.date(),
+    status: Joi.string().required(),
+    carrier_rate: Joi.number().required()
 })
 
-module.exports = model('Shipment', ShipmentSchema);
+module.exports = ShipmentSchema;

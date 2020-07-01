@@ -1,15 +1,11 @@
-const { model, Schema } = require('mongoose');
+const Joi = require('joi');
 
-const CarrierSchema = new Schema({
-    name: String,
-    scac: String,
-    mc: Number,
-    dot: Number,
-    fein: String,
-    created_at: {
-        type: Date,
-        default: Date.now
-    }
+const CarrierSchema = Joi.object().keys({
+    name: Joi.string().required(),
+    scac: Joi.string().required(),
+    mc: Joi.number(),
+    dot: Joi.number(),
+    fein: Joi.string(),
 })
 
-module.exports = model('Carrier', CarrierSchema);
+module.exports = CarrierSchema;
